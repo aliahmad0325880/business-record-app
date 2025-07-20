@@ -1,11 +1,20 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export default function LoginPage() {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  // If already logged in, redirect to homepage
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('isLoggedIn');
+    if (loggedIn === 'true') {
+      router.push('/');
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +29,8 @@ export default function LoginPage() {
 
     if (res.ok) {
       localStorage.setItem('isLoggedIn', 'true');
-      router.push('/');
+      alert('Login successful');
+      router.push('/'); // ✅ this will redirect properly
     } else {
       setError('Invalid credentials');
     }
@@ -51,9 +61,4 @@ export default function LoginPage() {
       </form>
     </div>
   );
-}
-if (res.ok) {
-  localStorage.setItem('isLoggedIn', 'true');
-  alert("Login successful"); // ✅ Added line
-  router.push('/');
 }
