@@ -15,7 +15,6 @@ export default function HomePage() {
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-4xl mx-auto bg-white p-6 rounded shadow">
         <h1 className="text-2xl font-bold mb-4">Customer Records</h1>
-        {/* Add your customer table / content here */}
         <p>This is your protected customer dashboard.</p>
       </div>
     </div>
