@@ -1,63 +1,49 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
-export default function LoginPage() {
+export default function Login() {
   const router = useRouter();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
-  // If already logged in, redirect to homepage
   useEffect(() => {
-    const loggedIn = localStorage.getItem('isLoggedIn');
-    if (loggedIn === 'true') {
-      router.push('/');
+    // If already logged in, redirect to dashboard
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      router.push('/dashboard');
     }
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (res.ok) {
+    if (email === 'admin@gmail.com' && password === '123456') {
       localStorage.setItem('isLoggedIn', 'true');
-      alert('Login successful');
-      router.push('/'); // ✅ this will redirect properly
+      router.push('/dashboard');
     } else {
-      setError('Invalid credentials');
+      alert('Invalid credentials');
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-80">
-        <h2 className="text-xl mb-4 font-semibold">Login</h2>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Login</h1>
+      <form onSubmit={handleLogin} className="space-y-4">
         <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="mb-3 p-2 border rounded w-full"
+          type="email"
+          placeholder="Email"
+          className="border p-2 w-full"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"
           placeholder="Password"
+          className="border p-2 w-full"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="mb-3 p-2 border rounded w-full"
         />
-        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2">
           Login
         </button>
-        {error && <p className="text-red-500 mt-2">{error}</p>}
       </form>
     </div>
   );
