@@ -1,22 +1,20 @@
-// pages/index.js
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-export default function Home() {
+export default function HomePage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Check if user is logged in
     const isLoggedIn = localStorage.getItem('isLoggedIn');
-    if (isLoggedIn !== 'true') {
-      router.push('/login'); // Redirect to login page
+    if (!isLoggedIn) {
+      router.push('/login'); // Redirect to login if not logged in
     }
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <h1 className="text-3xl font-bold text-center mb-4">Welcome to Business Record App</h1>
-      <p className="text-lg">You are logged in successfully!</p>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Customer Records</h1>
+      {/* Your customer page content here */}
     </div>
   );
 }

@@ -52,3 +52,8 @@ export default function LoginPage() {
     </div>
   );
 }
+if (res.ok) {
+  localStorage.setItem('isLoggedIn', 'true');
+  alert("Login successful"); // ✅ Added line
+  router.push('/');
+}
