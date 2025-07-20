@@ -1,7 +1,11 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  // Remove `output: export` for proper API routing
-}
-
-module.exports = nextConfig;
+// next.config.js
+module.exports = {
+  // Ensure Next.js knows these are client-side only
+  webpack: (config) => {
+    config.resolve.fallback = { 
+      ...config.resolve.fallback,
+      // Add any other polyfills needed
+    };
+    return config;
+  },
+};
