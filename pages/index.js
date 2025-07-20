@@ -1,15 +1,20 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 export default function HomePage() {
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-    if (isLoggedIn !== 'true') {
-      router.push('/login'); // Not logged in? Redirect.
+    if (isLoggedIn === 'true') {
+      setLoading(false);
+    } else {
+      router.replace('/login');
     }
   }, []);
+
+  if (loading) return null;
 
   return (
     <div className="p-6">
