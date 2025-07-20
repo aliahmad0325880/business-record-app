@@ -5,8 +5,10 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/login'); // Always redirect to login on site load
+    // Check auth status before redirecting
+    const isLoggedIn = typeof window !== 'undefined' && localStorage.getItem('isLoggedIn') === 'true';
+    router.push(isLoggedIn ? '/dashboard' : '/login');
   }, []);
 
-  return null; // Empty component since it immediately redirects
+  return null;
 }
